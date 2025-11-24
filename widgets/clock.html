@@ -1,0 +1,37 @@
+<div class="clock">
+    <div class="clock__time" data-clock-time></div>
+    <div class="clock__greeting" data-clock-greeting></div>
+</div>
+<script>
+    (() => {
+        const root = document.currentScript.previousElementSibling;
+        if (!root) return;
+
+        const timeEl = root.querySelector('[data-clock-time]');
+        const greetingEl = root.querySelector('[data-clock-greeting]');
+
+        function formatTime(date) {
+            return date.toLocaleTimeString('cs-CZ', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        function getGreeting(hour) {
+            if (hour < 9) return 'Dobré ráno';
+            if (hour < 12) return 'Dobré dopoledne';
+            if (hour < 18) return 'Dobré odpoledne';
+            return 'Dobrý večer';
+        }
+
+        function updateClock() {
+            const now = new Date();
+            timeEl.textContent = formatTime(now);
+            greetingEl.textContent = getGreeting(now.getHours());
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    })();
+</script>
