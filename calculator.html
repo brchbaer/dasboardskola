@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulačka</title>
+
+    <style>
+        .simple-calc {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            max-width: 240px;
+            padding: 12px;
+            background: #f3f3f6;
+            border-radius: 18px;
+            box-shadow:
+                0 4px 10px rgba(0,0,0,0.08),
+                0 1px 2px rgba(0,0,0,0.15);
+        }
+
+        #calc-input {
+            grid-column: span 4;
+            padding: 12px;
+            height: 42px;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: right;
+            background: #ffffff;
+            border: none;
+            border-radius: 12px;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .buttons {
+            display: contents;
+        }
+
+        button {
+            padding: 14px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: #e5e5ea;
+            color: #000;
+            cursor: pointer;
+            transition: 0.15s ease;
+            box-shadow:
+                0 1px 3px rgba(0,0,0,0.12),
+                inset 0 -1px 0 rgba(255,255,255,0.5);
+        }
+
+        button:hover {
+            background: #dcdce1;
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            background: #cfcfd4;
+            transform: scale(0.97);
+        }
+
+        .op {
+            background: #d1d1d6;
+            font-weight: 600;
+        }
+
+        .clear {
+            grid-column: span 4;
+            background: #ff3b30;
+            color: white;
+            font-weight: 600;
+        }
+
+        .clear:hover {
+            background: #ff4f43;
+        }
+
+        .clear:active {
+            background: #e03127;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="simple-calc">
+    <input type="text" id="calc-input">
+
+    <div class="buttons">
+        <button onclick="calcAppend('7')">7</button>
+        <button onclick="calcAppend('8')">8</button>
+        <button onclick="calcAppend('9')">9</button>
+        <button onclick="calcAppend('/')" class="op">/</button>
+
+        <button onclick="calcAppend('4')">4</button>
+        <button onclick="calcAppend('5')">5</button>
+        <button onclick="calcAppend('6')">6</button>
+        <button onclick="calcAppend('*')" class="op">*</button>
+
+        <button onclick="calcAppend('1')">1</button>
+        <button onclick="calcAppend('2')">2</button>
+        <button onclick="calcAppend('3')">3</button>
+        <button onclick="calcAppend('-')" class="op">-</button>
+
+        <button onclick="calcAppend('0')">0</button>
+        <button onclick="calcAppend('.')">.</button>
+        <button onclick="calcResult()" class="op">=</button>
+        <button onclick="calcAppend('+')" class="op">+</button>
+
+        <button onclick="calcClear()" class="clear">C</button>
+    </div>
+</div>
+
+<script>
+    window.calcAppend = function(val) {
+        document.getElementById('calc-input').value += val;
+    }
+
+    window.calcResult = function() {
+        try {
+            const input = document.getElementById('calc-input');
+            input.value = eval(input.value);
+        } catch(e) {
+            alert("Chyba");
+        }
+    }
+
+    window.calcClear = function() {
+        document.getElementById('calc-input').value = '';
+    }
+</script>
+
+</body>
+</html>
