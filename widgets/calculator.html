@@ -8,28 +8,30 @@
         .simple-calc {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            max-width: 240px;
-            padding: 12px;
-            background: #f3f3f6;
+            gap: 8px;
+            max-width: 260px;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffd3e6, #ffbadc);
             border-radius: 18px;
+            border: 2px solid rgba(0, 0, 0, 0.35);
             box-shadow:
-                0 4px 10px rgba(0,0,0,0.08),
-                0 1px 2px rgba(0,0,0,0.15);
+                0 12px 26px rgba(0,0,0,0.22),
+                0 6px 12px rgba(0,0,0,0.18);
+            margin: 0 auto;
         }
 
         #calc-input {
             grid-column: span 4;
             padding: 12px;
-            height: 42px;
-            font-size: 20px;
-            font-weight: 600;
+            height: 48px;
+            font-size: 22px;
+            font-weight: 700;
             text-align: right;
-            background: #ffffff;
-            border: none;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 12px;
             outline: none;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.18);
         }
 
         .buttons {
@@ -37,47 +39,53 @@
         }
 
         button {
-            padding: 14px 0;
+            padding: 16px 0;
             font-size: 18px;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
-            background: #e5e5ea;
-            color: #000;
+            background: rgba(255, 255, 255, 0.22);
             cursor: pointer;
             transition: 0.15s ease;
             box-shadow:
-                0 1px 3px rgba(0,0,0,0.12),
-                inset 0 -1px 0 rgba(255,255,255,0.5);
+                0 2px 6px rgba(0,0,0,0.18),
+                inset 0 -1px 0 rgba(255,255,255,0.6);
         }
 
         button:hover {
-            background: #dcdce1;
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
         }
 
         button:active {
-            background: #cfcfd4;
+            background: rgba(255, 255, 255, 0.35);
             transform: scale(0.97);
         }
 
         .op {
-            background: #d1d1d6;
-            font-weight: 600;
+            background: rgba(255, 255, 255, 0.26);
+            font-weight: 700;
         }
 
         .clear {
             grid-column: span 4;
-            background: #ff3b30;
-            color: white;
-            font-weight: 600;
+            background: #ff7eb6;
+            font-weight: 700;
+            border-color: rgba(0, 0, 0, 0.35);
         }
 
         .clear:hover {
-            background: #ff4f43;
+            background: #ff63a6;
         }
 
         .clear:active {
-            background: #e03127;
+            background: #e55392;
+        }
+
+        button img {
+            height: 33px;
+            width: 33px;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -108,7 +116,9 @@
         <button onclick="calcResult()" class="op">=</button>
         <button onclick="calcAppend('+')" class="op">+</button>
 
-        <button onclick="calcClear()" class="clear">C</button>
+        <button onclick="calcClear()" class="clear">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><ellipse cx='32' cy='34' rx='22' ry='18' fill='%23fff' stroke='%23000' stroke-width='2'/><circle cx='24' cy='30' r='3' fill='%23000'/><circle cx='40' cy='30' r='3' fill='%23000'/><ellipse cx='32' cy='36' rx='4' ry='3' fill='%23f3c2d7' stroke='%23000' stroke-width='1.5'/><line x1='16' y1='34' x2='8' y2='32' stroke='%23000' stroke-width='2'/><line x1='16' y1='38' x2='8' y2='38' stroke='%23000' stroke-width='2'/><line x1='16' y1='42' x2='8' y2='44' stroke='%23000' stroke-width='2'/><line x1='48' y1='34' x2='56' y2='32' stroke='%23000' stroke-width='2'/><line x1='48' y1='38' x2='56' y2='38' stroke='%23000' stroke-width='2'/><line x1='48' y1='42' x2='56' y2='44' stroke='%23000' stroke-width='2'/><path d='M24 16 L20 8 L26 10 Z' fill='%23fff' stroke='%23000' stroke-width='2'/><path d='M44 16 L48 8 L42 10 Z' fill='%23fff' stroke='%23000' stroke-width='2'/><circle cx='36' cy='20' r='5' fill='%23ff7eb6' stroke='%23000' stroke-width='2'/><circle cx='42' cy='20' r='5' fill='%23ff7eb6' stroke='%23000' stroke-width='2'/><circle cx='39' cy='20' r='3' fill='%23ffcadf' stroke='%23000' stroke-width='1.5'/></svg>" alt="Hello Kitty">
+        </button>
     </div>
 </div>
 

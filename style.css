@@ -8,7 +8,7 @@
     --pink-bg: #ffd3e6;
     --pink-accent: #ffbadc;
     --white: #ffffff;
-    --text-outline: 0 0 1px #000, 0 0 2px rgba(0,0,0,0.6);
+    --text-outline: 0 0 2px #000, 0 0 4px rgba(0,0,0,0.7), 0 0 6px rgba(0,0,0,0.5);
   }
   
   body {
@@ -63,6 +63,30 @@
     color: var(--white) !important;
     text-shadow: var(--text-outline);
   }
+
+  /* Centrovat widgety s obsahem */
+  .widget .simple-calc {
+    margin: 0 auto;
+  }
+
+  .clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    text-align: center;
+  }
+
+  .clock__time {
+    font-size: 4em; /* ~400% velikost */
+    font-weight: 800;
+  }
+
+  .clock__greeting {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
   
   input, button {
     background: rgba(255, 255, 255, 0.2);
@@ -75,4 +99,8 @@
   
   button:active {
     background: rgba(255, 255, 255, 0.35);
+  }
+  
+  blockquote strong {
+    font-size: 3em;
   }
