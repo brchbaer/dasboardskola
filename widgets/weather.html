@@ -1,0 +1,74 @@
+<div class="weather-widget">
+  <div class="weather-city" data-weather-city>Načítám...</div>
+  <div class="weather-temp" data-weather-temp>--°C</div>
+  <div class="weather-desc" data-weather-desc>Načítám...</div>
+</div>
+<style>
+  .weather-widget {
+      text-align: center;
+      padding: 20px 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+      width: 100%;
+  }
+
+  .weather-city {
+      font-size: 24px;
+      font-weight: 600;
+  }
+
+  .weather-temp {
+      font-size: 50px;
+      font-weight: 700;
+      margin: 10px 0;
+  }
+
+  .weather-desc {
+      font-size: 22px;
+  }
+</style>
+<script>
+  (function () {
+      const root = document.currentScript.previousElementSibling.previousElementSibling;
+      if (!root) return;
+
+      const tempEl = root.querySelector('[data-weather-temp]');
+      const descEl = root.querySelector('[data-weather-desc]');
+      const cityEl = root.querySelector('[data-weather-city]');
+
+      // souradnice pro hradiste
+      let lat = 49.0690;
+      let long = 17.4597;
+
+      // api
+      const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true`;
+      const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=cs`;
+
+      fetch(weatherUrl)
+          .then(res => res.json())
+          .then(data => {
+              const temp = data.current_weather.temperature;
+              const code = data.current_weather.weathercode;
+
+              tempEl.textContent = `${temp}°C`;
+              descEl.textContent = getWeatherDescription(code);
+          });
+
+      fetch(geoUrl)
+          .then(res => res.json())
+          .then(data => {
+              cityEl.textContent = data.city || data.locality || 'Neznámé místo';
+          });
+
+      function getWeatherDescription(code) {
+          if (code === 0) return 'Jasno';
+          if (code >= 1 && code <= 3) return 'Polojasno';
+          if (code >= 45 && code <= 48) return 'Mlha';
+          if (code >= 51 && code <= 67) return 'Déšť';
+          if (code >= 71 && code <= 77) return 'Sníh';
+          if (code >= 95) return 'Bouřka';
+          return 'Neznámé';
+      }
+  })();
+</script>
