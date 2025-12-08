@@ -10,14 +10,13 @@
   <main id="dashboard" class="grid"></main>
 
   <script>
-    // seznam widgetů, které chceme načíst
-    // každý widget může mít konfiguraci: { name: 'název', width: 'full'|'half'|'third' }
-    // nebo jednoduše string pro výchozí šířku
     const widgets = [
       { name: 'clock', width: 'full' },
       { name: 'calculator', width: 'half' },
       { name: 'ahoj', width: 'half' },
-      { name: 'weather', width: 'half' }
+      { name: 'weather', width: 'half' },
+      { name: 'todo', width: 'half' },
+
     ];
 
     async function loadWidgets() {

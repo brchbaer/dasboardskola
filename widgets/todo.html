@@ -1,0 +1,130 @@
+<div class="todo-widget" x-data="todoWidget()">
+  <h3>To-Do List</h3>
+
+  <div class="input-group">
+    <input type="text" x-model="newTodo" @keyup.enter="add()" placeholder="Nový task...">
+    <button @click="add()">+</button>
+  </div>
+
+  <ul>
+    <template x-for="todo in todos" :key="todo.id">
+      <li :class="{ 'completed': todo.completed }">
+        <div class="todo-item-content">
+          <input type="checkbox" x-model="todo.completed">
+          <span x-text="todo.text"></span>
+        </div>
+        <button @click="remove(todo.id)" class="delete-btn">&times;</button>
+      </li>
+    </template>
+  </ul>
+
+  <style>
+    .input-group,
+    .todo-widget li,
+    .todo-item-content {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .todo-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .todo-widget ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .todo-widget li {
+      justify-content: space-between;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 1px;
+      border: 1px solid rgba(4, 1, 1, 0.3);
+      background: rgba(255,255,255,0.12);
+
+    }
+    .todo-item-content {
+      gap: 10px;
+    }
+    .todo-widget input[type="text"] {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #fff;
+    }
+    .todo-widget input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .todo-widget button {
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .delete-btn {
+      font-size: 16px;
+      padding: 6px 10px;
+      background: #ff7eb6;
+      border-color: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      box-shadow:
+        0 2px 6px rgba(0,0,0,0.18),
+        inset 0 -1px 0 rgba(255,255,255,0.6);
+    }
+    .delete-btn:hover {
+      background: #ff63a6;
+    }
+    .delete-btn:active {
+      background: #e55392;
+      transform: scale(0.97);
+    }
+    .completed span {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .input-group {
+        display:flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .input-group input {
+        padding: 5px 10px;
+        width: 90%;
+    }
+
+  </style>
+
+  <script>
+    function todoWidget() {
+      return {
+        newTodo: '',
+        todos: JSON.parse(localStorage.getItem('todos') || '[]'),
+        init() {
+          this.$watch('todos', value => {
+            localStorage.setItem('todos', JSON.stringify(value));
+          });
+        },
+        add() {
+          if (this.newTodo.trim() === '') return;
+          this.todos.push({
+            id: Date.now(),
+            text: this.newTodo,
+            completed: false
+          });
+          this.newTodo = '';
+        },
+        remove(id) {
+          this.todos = this.todos.filter(todo => todo.id !== id);
+        }
+      };
+    }
+  </script>
+</div>
