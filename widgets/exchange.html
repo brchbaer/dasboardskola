@@ -1,27 +1,131 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
   <meta charset="UTF-8">
   <title>Převodník měn</title>
   <style>
-    .currency-widget{display:grid;gap:1rem;max-width:620px;margin:0 auto;background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.28));border:1px solid rgba(255,255,255,0.35);border-radius:18px;padding:1.25rem;box-shadow:0 10px 30px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.65);backdrop-filter:blur(8px)}
-    .currency-widget h2{font-size:1.4rem;letter-spacing:0.3px}
-    .currency-widget .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.8rem}
-    .currency-widget label{display:grid;gap:0.35rem;font-weight:700;font-size:0.96rem}
-    .currency-widget input,.currency-widget select{width:100%;padding:0.65rem 0.75rem;border-radius:12px;border:1px solid rgba(255,255,255,0.45);background:rgba(255,255,255,0.22);outline:none;box-shadow:inset 0 1px 4px rgba(0,0,0,0.15);font-weight:700;color:#1f1f1f !important;text-shadow:none !important;-webkit-appearance:none;appearance:none}
-    .currency-widget input:focus,.currency-widget select:focus{border-color:rgba(255,255,255,0.7);box-shadow:inset 0 1px 6px rgba(0,0,0,0.17),0 0 0 3px rgba(255,255,255,0.18)}
-    .currency-widget .actions{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
-    .currency-widget button{padding:0.65rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.26);cursor:pointer;font-weight:800;letter-spacing:0.4px;box-shadow:0 2px 6px rgba(0,0,0,0.16),inset 0 -1px 0 rgba(255,255,255,0.6);transition:transform 0.14s ease,background 0.14s ease}
-    .currency-widget button:hover{background:rgba(255,255,255,0.35);transform:translateY(-1px)}
-    .currency-widget button:active{transform:scale(0.98);background:rgba(255,255,255,0.4)}
-    .swap-btn{display:inline-flex;align-items:center;gap:0.35rem}
-    .currency-widget option{color:#1f1f1f !important;background:rgba(255,211,230,0.9);text-shadow:none !important}
-    .result{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:14px;padding:1rem;display:grid;gap:0.35rem;box-shadow:inset 0 1px 5px rgba(0,0,0,0.2)}
-    .result .value{font-size:2rem;font-weight:800}
-    .rate{font-size:0.95rem;opacity:0.9}
-    .note{font-size:0.9rem;opacity:0.9}
+    .currency-widget {
+      display: grid;
+      gap: 1rem;
+      max-width: 620px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.28));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px)
+    }
+
+    .currency-widget h2 {
+      font-size: 1.4rem;
+      letter-spacing: 0.3px
+    }
+
+    .currency-widget .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem
+    }
+
+    .currency-widget label {
+      display: grid;
+      gap: 0.35rem;
+      font-weight: 700;
+      font-size: 0.96rem
+    }
+
+    .currency-widget input,
+    .currency-widget select {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.22);
+      outline: none;
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.15);
+      font-weight: 700;
+      color: #1f1f1f !important;
+      text-shadow: none !important;
+      -webkit-appearance: none;
+      appearance: none
+    }
+
+    .currency-widget input:focus,
+    .currency-widget select:focus {
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.17), 0 0 0 3px rgba(255, 255, 255, 0.18)
+    }
+
+    .currency-widget .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap
+    }
+
+    .currency-widget button {
+      padding: 0.65rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.26);
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.6);
+      transition: transform 0.14s ease, background 0.14s ease
+    }
+
+    .currency-widget button:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px)
+    }
+
+    .currency-widget button:active {
+      transform: scale(0.98);
+      background: rgba(255, 255, 255, 0.4)
+    }
+
+    .swap-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem
+    }
+
+    .currency-widget option {
+      color: #1f1f1f !important;
+      background: rgba(255, 211, 230, 0.9);
+      text-shadow: none !important
+    }
+
+    .result {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 14px;
+      padding: 1rem;
+      display: grid;
+      gap: 0.35rem;
+      box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.2)
+    }
+
+    .result .value {
+      font-size: 2rem;
+      font-weight: 800
+    }
+
+    .rate {
+      font-size: 0.95rem;
+      opacity: 0.9
+    }
+
+    .note {
+      font-size: 0.9rem;
+      opacity: 0.9
+    }
   </style>
 </head>
+
 <body>
   <div class="currency-widget">
     <div>
@@ -30,8 +134,22 @@
     </div>
     <div class="controls">
       <label>Částka<input id="amount" type="number" inputmode="decimal" placeholder="Zadej částku" value="100"></label>
-      <label>Z<select id="from"><option value="CZK">CZK — Česká koruna</option><option value="EUR">EUR — Euro</option><option value="USD">USD — Americký dolar</option><option value="GBP">GBP — Libra</option><option value="PLN">PLN — Polský zlotý</option><option value="HUF">HUF — Maďarský forint</option></select></label>
-      <label>Do<select id="to"><option value="EUR">EUR — Euro</option><option value="CZK">CZK — Česká koruna</option><option value="USD">USD — Americký dolar</option><option value="GBP">GBP — Libra</option><option value="PLN">PLN — Polský zlotý</option><option value="HUF">HUF — Maďarský forint</option></select></label>
+      <label>Z<select id="from">
+          <option value="CZK">CZK — Česká koruna</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="USD">USD — Americký dolar</option>
+          <option value="GBP">GBP — Libra</option>
+          <option value="PLN">PLN — Polský zlotý</option>
+          <option value="HUF">HUF — Maďarský forint</option>
+        </select></label>
+      <label>Do<select id="to">
+          <option value="EUR">EUR — Euro</option>
+          <option value="CZK">CZK — Česká koruna</option>
+          <option value="USD">USD — Americký dolar</option>
+          <option value="GBP">GBP — Libra</option>
+          <option value="PLN">PLN — Polský zlotý</option>
+          <option value="HUF">HUF — Maďarský forint</option>
+        </select></label>
     </div>
     <div class="actions">
       <button id="swap" class="swap-btn" type="button">↔ Vyměnit</button>
@@ -43,7 +161,56 @@
     </div>
   </div>
   <script>
-    (()=>{const ratesCZK={CZK:1,EUR:24.6,USD:22.5,GBP:28.3,PLN:5.4,HUF:0.066};const amountEl=document.getElementById('amount');const fromEl=document.getElementById('from');const toEl=document.getElementById('to');const resultEl=document.getElementById('result');const rateEl=document.getElementById('rate');const formatNumber=value=>value.toLocaleString('cs-CZ',{minimumFractionDigits:2,maximumFractionDigits:2});const convert=()=>{const amountRaw=amountEl.value.replace(',', '.');const amount=parseFloat(amountRaw);const from=fromEl.value;const to=toEl.value;if(!isFinite(amount)){resultEl.textContent='Zadej číslo';rateEl.textContent='Tip: můžeš použít čárku nebo tečku.';return}const czkValue=amount*ratesCZK[from];const converted=czkValue/ratesCZK[to];const rate=ratesCZK[from]/ratesCZK[to];resultEl.textContent=`${formatNumber(converted)} ${to}`;rateEl.textContent=`1 ${from} = ${rate.toFixed(4)} ${to}`};document.getElementById('convert').addEventListener('click',convert);document.getElementById('swap').addEventListener('click',()=>{const currentFrom=fromEl.value;fromEl.value=toEl.value;toEl.value=currentFrom;convert()});amountEl.addEventListener('input',convert);fromEl.addEventListener('change',convert);toEl.addEventListener('change',convert);convert()})();
+    (() => {
+      const ratesCZK = {
+        CZK: 1,
+        EUR: 24.6,
+        USD: 22.5,
+        GBP: 28.3,
+        PLN: 5.4,
+        HUF: 0.066
+      };
+      const amountEl = document.getElementById('amount');
+      const fromEl = document.getElementById('from');
+      const toEl = document.getElementById('to');
+      const resultEl = document.getElementById('result');
+      const rateEl = document.getElementById('rate');
+      const formatNumber = value => value.toLocaleString('cs-CZ', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      const convert = () => {
+        const amountRaw = amountEl.value.replace(',', '.');
+        const amount = parseFloat(amountRaw);
+        const from = fromEl.value;
+        const to = toEl.value;
+
+        if (!isFinite(amount)) {
+          resultEl.textContent = 'Zadej číslo';
+          rateEl.textContent = 'Tip: můžeš použít čárku nebo tečku.';
+          return;
+        }
+
+        const czkValue = amount * ratesCZK[from];
+        const converted = czkValue / ratesCZK[to];
+        const rate = ratesCZK[from] / ratesCZK[to];
+        resultEl.textContent = `${formatNumber(converted)} ${to}`;
+        rateEl.textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`;
+      };
+
+      document.getElementById('convert').addEventListener('click', convert);
+      document.getElementById('swap').addEventListener('click', () => {
+        const currentFrom = fromEl.value;
+        fromEl.value = toEl.value;
+        toEl.value = currentFrom;
+        convert();
+      });
+      amountEl.addEventListener('input', convert);
+      fromEl.addEventListener('change', convert);
+      toEl.addEventListener('change', convert);
+      convert();
+    })();
   </script>
 </body>
+
 </html>
